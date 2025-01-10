@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cartwright-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/cartwright-{{ version }}.tar.gz
   sha256: 9b020e28953ca128b8d1d04bb5dffc15a871a81f18272d1c967dbc501d01f085
 
 build:
@@ -14,13 +14,13 @@ build:
     - cartwright = cartwright.categorize:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
     - poetry-core
-    - python >=3.7,<4.0
+    - python {{ python_min }}
   run:
     - arrow ==1.0.3
     - faker >=14.0
@@ -29,7 +29,7 @@ requirements:
     - numpy >=1.19
     - pandas >=1.1
     - pydantic ==1.8.2
-    - python >=3.7,<4.0
+    - python >={{ python_min }},<4.0
     - python-levenshtein ==0.20.7
     - scipy >=1.5
     - pytorch >=1.8
@@ -43,6 +43,7 @@ test:
     - cartwright --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/jataware/cartwright
